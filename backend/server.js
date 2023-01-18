@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 
 app.get("/api/chat", (req, res) => {
     res.send(chats)
+    // res.send("this should send all chats")
 })
 
 

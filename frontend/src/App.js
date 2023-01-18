@@ -1,27 +1,18 @@
 
-import { Button, Stack } from '@chakra-ui/react';
+import { Route } from 'react-router-dom';
+import ChatPage from './Pages/ChatPage';
+import Homepage from './Pages/Homepage';
 import './App.css';
 
 function App() {
+
+
+
   return (
     <div className="App">
-      <Stack direction='row' spacing={4} align='center'>
-        <Button colorScheme='teal' variant='solid'>
-          Button
-        </Button>
-        <Button colorScheme='teal' variant='outline'>
-          Button
-        </Button>
-        <Button colorScheme='teal' variant='ghost'>
-          Button
-        </Button>
-        <Button colorScheme='teal' variant='link'>
-          Button
-        </Button>
-      </Stack>
-   
+      <Route path='/' component={Homepage} exact />
+      <Route path='/chats' component={ChatPage} />
     </div>
   );
 }
-
 export default App;
