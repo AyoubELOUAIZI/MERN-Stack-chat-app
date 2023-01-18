@@ -3,4 +3,7 @@ npm install express
 node backend/server.js
 npm start  |  npm run start
 nodemon backend/server.js
+npm i dotenv
+npm install nodemon
+testing in postman
 

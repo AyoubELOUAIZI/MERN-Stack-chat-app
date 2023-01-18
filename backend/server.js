@@ -1,10 +1,12 @@
 const express = require('express')
 const { chats } = require('./data/data')
+const dotenv=require('dotenv');
+dotenv.config();
 const app = express()
-const port = 5000
+const port = process.env.PORT || 4000;
 
 app.get('/', (req, res) => {
-    res.send(chats)
+    res.send("Hello world")
 })
 
 
@@ -20,7 +22,6 @@ app.get("/api/chat/:id", (req, res) => {
     console.log(singlechat);
     res.send(singlechat)
 })
-
 
 
 
