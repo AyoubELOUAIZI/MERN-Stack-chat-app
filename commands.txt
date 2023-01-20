@@ -9,6 +9,11 @@ npm install nodemon
 testing in postman
 npm i mongoos
 // "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+npm i colors
+npm i mongoose
+
+npm install jsonwebtoken
+npm i bcryptjs
 
 
 
