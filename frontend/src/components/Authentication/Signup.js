@@ -7,6 +7,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router";
 
+
 const Signup = () => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
@@ -15,11 +16,12 @@ const Signup = () => {
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
-    const [confirmpassword, setConfirmpassword] = useState();
     const [password, setPassword] = useState();
+    const [confirmpassword, setConfirmpassword] = useState();
     const [pic, setPic] = useState();
     const [picLoading, setPicLoading] = useState(false);
 
+    //------------------------------------------------------------------------------------------------//
     const submitHandler = async () => {
         setPicLoading(true);
         if (!name || !email || !password || !confirmpassword) {
@@ -33,6 +35,7 @@ const Signup = () => {
             setPicLoading(false);
             return;
         }
+
         if (password !== confirmpassword) {
             toast({
                 title: "Passwords Do Not Match",
@@ -41,9 +44,11 @@ const Signup = () => {
                 isClosable: true,
                 position: "bottom",
             });
+            setPicLoading(false);
             return;
         }
         console.log(name, email, password, pic);
+
         try {
             const config = {
                 headers: {
@@ -60,7 +65,9 @@ const Signup = () => {
                 },
                 config
             );
+
             console.log(data);
+
             toast({
                 title: "Registration Successful",
                 status: "success",
@@ -68,6 +75,8 @@ const Signup = () => {
                 isClosable: true,
                 position: "bottom",
             });
+            
+            //localStorage
             localStorage.setItem("userInfo", JSON.stringify(data));
             setPicLoading(false);
             history.push("/chats");
@@ -84,8 +93,10 @@ const Signup = () => {
         }
     };
 
+    //------------------------------------------------------------------------------------------------//
     const postDetails = (pics) => {
         setPicLoading(true);
+        //check if the picture is chosen or not if not we show a toast using chakra-ui and just return
         if (pics === undefined) {
             toast({
                 title: "Please Select an Image!",
@@ -96,18 +107,22 @@ const Signup = () => {
             });
             return;
         }
+
         console.log(pics);
+
         if (pics.type === "image/jpeg" || pics.type === "image/png") {
             const data = new FormData();
             data.append("file", pics);
-            data.append("upload_preset", "chat-app");
-            data.append("cloud_name", "piyushproj");
-            fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+            data.append("upload_preset", "mchat-app");
+            data.append("cloud_name", "ayoub-cloud");
+
+            fetch("https://api.cloudinary.com/v1_1/ayoub-cloud/image/upload", {
                 method: "post",
                 body: data,
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    //very important for me as ayoub
                     setPic(data.url.toString());
                     console.log(data.url.toString());
                     setPicLoading(false);
@@ -118,7 +133,7 @@ const Signup = () => {
                 });
         } else {
             toast({
-                title: "Please Select an Image!",
+                title: "Please Select an Image! or ==>png/jpeg",
                 status: "warning",
                 duration: 5000,
                 isClosable: true,
@@ -128,6 +143,8 @@ const Signup = () => {
             return;
         }
     };
+    //------------------------------------------------------------------------------------------------//
+
 
     return (
         <VStack spacing="5px">
@@ -160,12 +177,13 @@ const Signup = () => {
                         <Button h="1.75rem" size="sm" onClick={handleClick}>
                             {show ? "Hide" : "Show"}
                         </Button>
-                    </InputRightElement>           
-                </InputGroup>               
+                    </InputRightElement>
+                </InputGroup>
             </FormControl>
 
             <FormControl id="password" isRequired>
                 <FormLabel>Confirm Password</FormLabel>
+
                 <InputGroup size="md">
                     <Input
                         type={show ? "text" : "password"}
@@ -178,6 +196,7 @@ const Signup = () => {
                         </Button>
                     </InputRightElement>
                 </InputGroup>
+
             </FormControl>
 
             <FormControl id="pic">
@@ -199,6 +218,7 @@ const Signup = () => {
             >
                 Sign Up
             </Button>
+
         </VStack>
     );
 };

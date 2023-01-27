@@ -4,6 +4,7 @@ const dotenv=require('dotenv');
 app.use(express.json());//to accept json data
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 dotenv.config();
 const port = process.env.PORT || 4000;
 connectDB(); // connect to database atlas
@@ -16,6 +17,9 @@ app.get('/', (req, res) => {
 // the '/api/user' endpoint using the userRoutes variable, 
 // which is assumed to contain routing functions.
 app.use('/api/user', userRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 
 
