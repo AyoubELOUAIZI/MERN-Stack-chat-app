@@ -1,25 +1,36 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
-//------------------------------------------------------------------------------------------------------------//
+//----------------------------------------third function-------------------------------------------//
 //@description     Get or Search all users
 //@route           GET /api/user?search=
 //@access          Public
 const allUsers = asyncHandler(async (req, res) => {
+    
+    //instead of using param we use query you can check that by printing the req //
+    console.log(req.query.search);
+
+    // check if the search query is present in the request
     const keyword = req.query.search
         ? {
+            // if present, construct a query to search for users
+            // whose name or email match the search criteria using regular expression
             $or: [
                 { name: { $regex: req.query.search, $options: "i" } },
                 { email: { $regex: req.query.search, $options: "i" } },
             ],
         }
         : {};
+    console.log(keyword)
 
+    //find the user by executing the query on the `User` model
     const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+    //send the result to the client in the response
     res.send(users);
 });
 
-//-------------------------------------------------first function-------------------------------------------------------//
+
+//-------------------------------------------------first function-----------------------------------------//
 //@description     Register new user
 //@route           POST /api/user/
 //@access          Public
