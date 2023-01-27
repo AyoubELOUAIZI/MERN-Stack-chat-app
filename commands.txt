@@ -12,8 +12,11 @@ npm i mongoos
 npm i colors
 npm i mongoose
 
+npm install express-async-handler
 npm install jsonwebtoken
+--npm uninstall mongoos
 npm i bcryptjs
+
 
 
 
