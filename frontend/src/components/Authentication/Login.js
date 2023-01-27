@@ -16,7 +16,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
 
     const history = useHistory();
-
+    //------------------------------------------------------------------------------------------------//
     const submitHandler = async () => {
         setLoading(true);
         if (!email || !password) {
@@ -30,22 +30,12 @@ const Login = () => {
             setLoading(false);
             return;
         }
+        console.log(email, password);
 
-        // console.log(email, password);
         try {
-            const config = {
-                headers: {
-                    "Content-type": "application/json",
-                },
-            };
-
-            const { data } = await axios.post(
-                "/api/user/login",
-                { email, password },
-                config
-            );
-
-            // console.log(JSON.stringify(data));
+            const config = { headers: { "Content-type": "application/json", }, };
+            const { data } = await axios.post( "/api/user/login",{ email, password },config);  //this is  were the data is being send
+            console.log(JSON.stringify(data));
             toast({
                 title: "Login Successful",
                 status: "success",
@@ -56,9 +46,10 @@ const Login = () => {
             localStorage.setItem("userInfo", JSON.stringify(data));
             setLoading(false);
             history.push("/chats");
+
         } catch (error) {
             toast({
-                title: "Error Occured!",
+                title: "==> Error Occured!",
                 description: error.response.data.message,
                 status: "error",
                 duration: 5000,
@@ -68,9 +59,11 @@ const Login = () => {
             setLoading(false);
         }
     };
+    //------------------------------------------------------------------------------------------------//
 
     return (
         <VStack spacing="10px">
+            {/* -------------Email Address -------------*/}
             <FormControl id="email" isRequired>
                 <FormLabel>Email Address</FormLabel>
                 <Input
@@ -80,8 +73,10 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
             </FormControl>
+            {/* ------------- Password -------------*/}
             <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
+
                 <InputGroup size="md">
                     <Input
                         value={password}
@@ -89,13 +84,17 @@ const Login = () => {
                         type={show ? "text" : "password"}
                         placeholder="Enter password"
                     />
+
+                    {/* ------------- button hide and show -------------*/}
                     <InputRightElement width="4.5rem">
                         <Button h="1.75rem" size="sm" onClick={handleClick}>
                             {show ? "Hide" : "Show"}
                         </Button>
                     </InputRightElement>
                 </InputGroup>
+
             </FormControl>
+            {/* ------------- button Login -------------*/}
             <Button
                 colorScheme="blue"
                 width="100%"
@@ -105,6 +104,7 @@ const Login = () => {
             >
                 Login
             </Button>
+            {/* ------------- button Get Guest User Credentials -------------*/}
             <Button
                 variant="solid"
                 colorScheme="red"
@@ -116,6 +116,7 @@ const Login = () => {
             >
                 Get Guest User Credentials
             </Button>
+
         </VStack>
     );
 };

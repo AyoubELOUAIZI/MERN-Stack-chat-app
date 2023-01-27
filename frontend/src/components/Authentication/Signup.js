@@ -50,11 +50,7 @@ const Signup = () => {
         console.log(name, email, password, pic);
 
         try {
-            const config = {
-                headers: {
-                    "Content-type": "application/json",
-                }
-            };
+            const config = { headers: {"Content-type": "application/json",} , };
             const { data } = await axios.post(
                 "/api/user",
                 {
@@ -75,7 +71,7 @@ const Signup = () => {
                 isClosable: true,
                 position: "bottom",
             });
-            
+
             //localStorage
             localStorage.setItem("userInfo", JSON.stringify(data));
             setPicLoading(false);
