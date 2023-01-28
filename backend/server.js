@@ -4,6 +4,7 @@ const dotenv=require('dotenv');
 app.use(express.json());//to accept json data
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 dotenv.config();
 const port = process.env.PORT || 4000;
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 // the '/api/user' endpoint using the userRoutes variable, 
 // which is assumed to contain routing functions.
 app.use('/api/user', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
