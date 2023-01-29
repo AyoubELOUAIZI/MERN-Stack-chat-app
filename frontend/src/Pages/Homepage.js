@@ -9,10 +9,10 @@ function Homepage() {
   const history = useHistory();
 
   useEffect(() => {
-    // check if there is a user in local storage
+    // check if there is a user in local storage 
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
-    // if there is a user, redirect to the /chats route
+    // if there is a user, redirect to the /chats route //
     if (user) history.push("/chats");
   }, [history]);
 
